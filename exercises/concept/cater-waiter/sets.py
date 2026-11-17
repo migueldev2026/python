@@ -25,7 +25,7 @@ def clean_ingredients(dish_name, dish_ingredients):
 
     """
 
-    pass
+    return (dish_name, set(dish_ingredients))
 
 
 def check_drinks(drink_name, drink_ingredients):
@@ -43,7 +43,10 @@ def check_drinks(drink_name, drink_ingredients):
 
     """
 
-    pass
+    if set(drink_ingredients).intersection(ALCOHOLS):
+        return f"{drink_name} Cocktail"
+    else:
+        return f"{drink_name} Mocktail"
 
 
 def categorize_dish(dish_name, dish_ingredients):
@@ -61,7 +64,16 @@ def categorize_dish(dish_name, dish_ingredients):
     All dishes will "fit" into one of the categories imported from `sets_categories_data.py`
     """
 
-    pass
+    if dish_ingredients.issubset(VEGAN):
+        return f"{dish_name}: VEGAN"
+    elif dish_ingredients.issubset(VEGETARIAN):
+        return f"{dish_name}: VEGETARIAN"
+    elif dish_ingredients.issubset(PALEO):
+        return f"{dish_name}: PALEO"
+    elif dish_ingredients.issubset(KETO):
+        return f"{dish_name}: KETO"
+    else:
+        return f"{dish_name}: OMNIVORE"
 
 
 def tag_special_ingredients(dish):
@@ -78,7 +90,9 @@ def tag_special_ingredients(dish):
     SPECIAL_INGREDIENTS constant imported from `sets_categories_data.py`.
     """
 
-    pass
+    dish_name, dish_ingredients = dish
+    special_ingredients = set(dish_ingredients).intersection(SPECIAL_INGREDIENTS)
+    return (dish_name, special_ingredients)
 
 
 def compile_ingredients(dishes):
@@ -93,7 +107,10 @@ def compile_ingredients(dishes):
     This function should return a `set` of all ingredients from all listed dishes.
     """
 
-    pass
+    all_ingredients = set()
+    for dish in dishes:
+        all_ingredients.update(dish)
+    return all_ingredients
 
 
 def separate_appetizers(dishes, appetizers):
@@ -110,7 +127,7 @@ def separate_appetizers(dishes, appetizers):
     Either list could contain duplicates and may require de-duping.
     """
 
-    pass
+    return list(set(dishes) - set(appetizers))
 
 
 def singleton_ingredients(dishes, intersection):
@@ -131,4 +148,7 @@ def singleton_ingredients(dishes, intersection):
     The function should return a `set` of ingredients that only appear in a single dish.
     """
 
-    pass
+    all_ingredients = set()
+    for dish in dishes:
+        all_ingredients.update(dish)
+    return all_ingredients - intersection
